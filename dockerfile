@@ -1,14 +1,17 @@
-# Use Java 21 image
-FROM eclipse-temurin:21-jdk
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 
-# Set working directory
 WORKDIR /app
 
-# Copy jar file
-COPY target/*.jar app.jar
+COPY . .
 
-# Expose port
-EXPOSE 8080
+RUN mvn clean package -DskipTests
 
-# Run the application
+FROM eclipse-temurin:17-jdk
+
+WORKDIR /app
+
+COPY --from=build /app/target/*.jar app.jar
+
+EXPOSE 8081
+
 ENTRYPOINT ["java","-jar","app.jar"]
