@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BackIcon } from "../components/Icons";
+import { BackIcon } from "../Components/Icons";
 import { authAPI } from "../service/api";
 
 export default function RegisterPage({ onRegister, onBack, onGoLogin }) {
@@ -14,15 +14,15 @@ export default function RegisterPage({ onRegister, onBack, onGoLogin }) {
   const handle = async () => {
     setError("");
     if (!name || !email || !password || !confirm) { setError("All fields are required."); return; }
-    if (password !== confirm)   { setError("Passwords do not match."); return; }
-    if (password.length < 6)    { setError("Password must be at least 6 characters."); return; }
+    if (password !== confirm) { setError("Passwords do not match."); return; }
+    if (password.length < 6) { setError("Password must be at least 6 characters."); return; }
     if (!/\S+@\S+\.\S+/.test(email)) { setError("Please enter a valid email address."); return; }
 
     setLoading(true);
     try {
       const userData = { fullName: name, email, password, role };
       const response = await authAPI.register(userData);
-      
+
       // Handle the backend response format
       const user = {
         id: response.id,
@@ -30,14 +30,14 @@ export default function RegisterPage({ onRegister, onBack, onGoLogin }) {
         email: response.email,
         role: response.role
       };
-      
+
       // If no token in response, create a mock token for now
       if (!response.token) {
         localStorage.setItem('token', `mock-token-${user.id}`);
       } else {
         localStorage.setItem('token', response.token);
       }
-      
+
       localStorage.setItem('homeworth_user', JSON.stringify(user));
       // Call onRegister with user data
       onRegister(user);
@@ -82,10 +82,10 @@ export default function RegisterPage({ onRegister, onBack, onGoLogin }) {
           <div className="auth-left-inner">
             <button className="auth-back-btn" onClick={onBack}><BackIcon /> Back to Home</button>
             <div className="auth-tag">✨ New Account</div>
-            <h1 className="auth-left-title">Join<br/><span>HomeWorth</span><br/>Today</h1>
+            <h1 className="auth-left-title">Join<br /><span>HomeWorth</span><br />Today</h1>
             <p className="auth-left-desc">Create your free account and start unlocking your property's true potential with expert guidance.</p>
             <div className="auth-features">
-              {[ ["🆓","100% free to join"], ["🏠","Submit unlimited properties"], ["📊","Get expert improvement advice"], ["📈","Track ROI on upgrades"] ].map(([ic, t]) => (
+              {[["🆓", "100% free to join"], ["🏠", "Submit unlimited properties"], ["📊", "Get expert improvement advice"], ["📈", "Track ROI on upgrades"]].map(([ic, t]) => (
                 <div key={t} className="auth-feature"><div className="feature-dot">{ic}</div><span>{t}</span></div>
               ))}
             </div>
