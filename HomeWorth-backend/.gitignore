@@ -1,20 +1,17 @@
-# Java / Spring Boot
+# STS / Eclipse files
+.metadata/
+.settings/
+.classpath
+.project
+
+# Build output
 target/
-*.log
 
-# Maven
-.mvn/
-
-# Node (remove unwanted frontend stuff)
+# Node files (IMPORTANT for your project)
 node_modules/
-package-lock.json
 package.json
+package-lock.json
 index.js
 
-# IDE
-.idea/
-.vscode/
-*.iml
-
-# OS
-.DS_Store
+# Logs
+*.log
